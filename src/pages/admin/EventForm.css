@@ -1,0 +1,144 @@
+.event-form {
+  background: white !important;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e5e5 !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05) !important;
+  padding: 0; /* Reset any extra padding if inside table */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-header {
+  background: linear-gradient(135deg, #160430 0%, #3a0519 50%, #a53860 100%) !important;
+  color: white !important;
+  padding: 1.5rem;
+  border-radius: 0.75rem 0.75rem 0 0;
+  border-bottom: 2px solid #a53860 !important;
+}
+
+.form-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+  padding: 0 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group:first-of-type {
+  padding-top: 1.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--foreground) !important;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1.5px solid #e5e5e5!important;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.3s ease !important;
+  background-color: #f9f9f9!important;
+  color: var(--foreground)!important;
+  width: 100% !important;           /* Ensure input fits parent */
+  box-sizing: border-box !important; /* Include padding & border in width */
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  background-color: white !important;
+  border-color: #a53860 !important;
+  box-shadow: 0 0 0 3px rgba(165, 56, 96, 0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.file-input {
+  cursor: pointer !important;
+}
+
+.image-preview {
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  max-height: 150px;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 2px solid #a53860 !important;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid #e5e5e5 !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn-submit,
+.btn-cancel {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #a53860 0%, #c75a7a 100%) !important;
+  color: white !important;
+  box-shadow: 0 2px 8px rgba(165, 56, 96, 0.2) !important;
+}
+
+.btn-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(165, 56, 96, 0.3) !important;
+}
+
+.btn-cancel {
+  background-color: #f5f5f5 !important;
+  color: var(--foreground) !important;
+  border: 1px solid #e5e5e5 !important;
+}
+
+.btn-cancel:hover {
+  background-color: #eeeeee !important;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}

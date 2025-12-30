@@ -1,0 +1,196 @@
+.navbar-container {
+  overflow: visible;
+  width: 100%;
+  height: 80px; /* adjust as needed */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed;  /* only if you want it always on top */
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.top-left {
+  position: fixed;
+  top: 18px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 20; /* must be above the video */
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+
+
+/* Logo image sizing */
+.logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Title box text */
+.text-box h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #fff;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.text-box p {
+  margin: 0;
+  color: #e0e0e0;
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+/* Make hero responsive - smaller screens stack text a bit */
+@media (max-width: 900px) {
+  .hero-video {
+    height: 320px;
+  }
+  .text-box h1 {
+    font-size: 22px;
+  }
+  .text-box p {
+    font-size: 12px;
+  }
+}
+
+/* Very small screens: reduce logo/title size */
+@media (max-width: 480px) {
+  .top-left {
+    top: 12px;
+    left: 12px;
+  }
+  .logo {
+    width: 48px;
+    height: 48px;
+  }
+  .text-box h1 {
+    font-size: 18px;
+  }
+}
+/* Top-right container */
+.top-right {
+  position: fixed;
+  top: 18px;
+  right: 50px;
+  display: flex;
+  gap: 12px;
+  z-index: 20;
+}
+
+/* --- Updated modern buttons --- */
+.top-right .btn {
+  cursor: pointer;
+  border-radius: 22px;
+  padding: 10px 22px;
+  font-size: 15px;
+  border: 1.4px solid rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.00);   /* fully transparent */
+  color: #ffffff;                       /* white text only */
+  backdrop-filter: blur(4px);
+  transition: all .18s ease-in-out;
+}
+
+/* Hover aesthetic */
+.top-right .btn:hover {
+  transform: translateY(-2px);
+  background: rgba(204, 182, 204, 0.2);
+  border-color: rgba(73, 11, 73, 0.85);
+  box-shadow: 0 0 12px rgba(255,120,255,0.35);
+}
+
+/* Signup emphasized (purple-pink accent) */
+.signup-btn {
+  border-color: rgba(66, 21, 66, 0.8);
+  color: #4b184b;
+  background: rgba(255,120,255,0.10);
+}
+
+.signup-btn:hover {
+  background: rgba(92, 31, 92, 0.32);
+  color: #fff;
+}
+
+/* Login stays clean white glow */
+.login-btn:hover {
+  background: rgba(92, 31, 92, 0.32);
+}
+
+/* Login normal */
+.login-btn {
+  border-color: rgba(255,255,255,0.85);
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+}
+
+/* Center rounded nav pill (step 2) */
+.pill-item a:link,
+.pill-item a:visited,
+.pill-item a:hover,
+.pill-item a:active {
+  color: #ffffff !important;
+}
+
+.center-pill {
+text-decoration: #e0e0e0;
+  position: fixed;
+  color: white;
+  top: 80px;                 /* moves the pill below the top bar; tweak as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 35;
+  width: min(92%, 1100px);   /* responsive width; adjusts to screen */
+  display: flex;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+/* pill container visual */
+.pill-items {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+
+  background: rgba(255,255,255,0.06);
+  border-radius: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+
+/* each item */
+.pill-item {
+  color: #ffffff;           /* white text */
+  padding: 12px 20px;       /* more spacing horizontally */
+  font-size: 16px;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background .12s, transform .12s;
+}
+
+/* hover */
+.pill-item:hover {
+  background: rgba(255,255,255,0.06);
+  transform: translateY(-2px);
+}
+
+/* active tab style (Events in image) */
+.pill-item.active {
+  background: #fff;
+  color: #0b3b66; /* darker text for contrast — tweak to match your palette */
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(11,59,102,0.18);
+}
