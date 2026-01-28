@@ -49,7 +49,10 @@ const Signup = () => {
         // Store user info
         localStorage.setItem(
           "user",
-          JSON.stringify({ name: formData.fullName, email: formData.email })
+          JSON.stringify({ 
+            id: formData.id,
+            name: formData.fullName, 
+            email: formData.email })
         );
         localStorage.setItem("token", data.token);
 

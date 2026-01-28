@@ -15,6 +15,22 @@ export default function Home() {
   const [carouselPaused, setCarouselPaused] = useState(false);
   const [activeEvent, setActiveEvent] = useState(null);
 
+  const API_BASE = "http://localhost:5000/api";
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    if (!userId) return;
+
+    fetch(`${API_BASE}/recommendations/${userId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setEvents(data);
+        setActiveIndex(0);
+      })
+      .catch((err) =>
+        console.error("Recommendation fetch error:", err)
+      );
+  }, [userId]);
   // Check login
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -160,65 +176,84 @@ export default function Home() {
         )}
       </section>
 
-      {/* Recommended Events Section */}
+     {/* Recommended Events Section */}
 <section className="upcoming-events-section">
   <h2 className="section-title">Recommended Events for you</h2>
-<p className="section-desc">Check out events we recommend for you and book your spot now!</p>
+  <p className="section-desc">
+    Check out events we recommend for you and book your spot now!
+  </p>
 
-<div className="carousel-card-wrapper">
-          {events.map((event, idx) => {
-            let className = "carousel-card-single";
-            if (idx === activeIndex) className += " active";
-            else if (idx === (activeIndex - 1 + events.length) % events.length) className += " prev";
-            else if (idx === (activeIndex + 1) % events.length) className += " next";
+  <div className="carousel-card-wrapper">
+    {events.map((event, idx) => {
+      let className = "carousel-card-single";
+      if (idx === activeIndex) className += " active";
+      else if (idx === (activeIndex - 1 + events.length) % events.length)
+        className += " prev";
+      else if (idx === (activeIndex + 1) % events.length)
+        className += " next";
 
-            return (
-              <div key={event.id} className={className}>
-                <div className="card-inner">
-                  <img
-                    src={event.flyer
-                      ? `http://localhost:5000/public/images/events/${event.flyer}`
-                      : "http://localhost:5000/public/images/events/default.jpg"}
-                    alt={event.title}
-                    className="card-image"
-                  />
-                  <h3>{event.title}</h3>
-                  <button className="view-btn" onClick={() => setActiveEvent(event)}>
-                    View Details
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Dots */}
-        <div className="carousel-dots">
-          {events.map((_, idx) => (
-            <span
-              key={idx}
-              className={`dot ${idx === activeIndex ? "active" : ""}`}
-              onClick={() => setActiveIndex(idx)}
-            ></span>
-          ))}
-        </div>
-
-        {/* Modal */}
-        {activeEvent && (
-          <div className="modal-overlay" onClick={() => setActiveEvent(null)}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-             <h3>{activeEvent.title}</h3>
-              <p>{activeEvent.description}</p>
-              <p> <label>Date: </label>{activeEvent.event_date}</p>
-              <p><label>Location:  </label>{activeEvent.location}</p>
-              <p><label>Price  </label>{activeEvent.ticket_price}</p>
-              <button className="close-btn" onClick={() => setActiveEvent(null)}>✕</button>
-            </div>
+      return (
+        <div key={event.id} className={className}>
+          <div className="card-inner">
+            <img
+              src={
+                event.flyer
+                  ? `http://localhost:5000/public/images/events/${event.flyer}`
+                  : `http://localhost:5000/public/images/events/default.jpg`
+              }
+              alt={event.title}
+              className="card-image"
+            />
+            <h3>{event.title}</h3>
+            <button
+              className="view-btn"
+              onClick={() => setActiveEvent(event)}
+            >
+              View Details
+            </button>
           </div>
-        )}
-       
-        
+        </div>
+      );
+    })}
+  </div>
+
+  {/* Dots */}
+  <div className="carousel-dots">
+    {events.map((_, idx) => (
+      <span
+        key={idx}
+        className={`dot ${idx === activeIndex ? "active" : ""}`}
+        onClick={() => setActiveIndex(idx)}
+      ></span>
+    ))}
+  </div>
+
+  {/* Modal */}
+  {activeEvent && (
+    <div
+      className="modal-overlay"
+      onClick={() => setActiveEvent(null)}
+    >
+      <div
+        className="modal-content"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h3>{activeEvent.title}</h3>
+        <p>{activeEvent.description}</p>
+        <p><label>Date:</label> {activeEvent.event_date}</p>
+        <p><label>Location:</label> {activeEvent.location}</p>
+        <p><label>Price:</label> {activeEvent.ticket_price}</p>
+        <button
+          className="close-btn"
+          onClick={() => setActiveEvent(null)}
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  )}
 </section>
+
 
       {/* Book Now Section */}
       <section className="book-now-section">

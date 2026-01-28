@@ -4,28 +4,10 @@ import "../styles/user-profile.css"
 const UserProfile = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [formData, setFormData] = useState(user)
-  const [bookings, setBookings] = useState([])
-  const [loading, setLoading] = useState(true)
 
-  // Sync user data
+  // ✅ Keep formData in sync with latest user prop
   useEffect(() => {
     setFormData(user)
-  }, [user])
-
-  // Fetch user bookings
-  useEffect(() => {
-    if (!user?.id) return
-
-    fetch(`http://localhost:5000/api/bookings/user/${user.user_id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setBookings(data)
-        setLoading(false)
-      })
-      .catch((err) => {
-        console.error("Failed to load bookings", err)
-        setLoading(false)
-      })
   }, [user])
 
   const handleChange = (e) => {
@@ -36,28 +18,18 @@ const UserProfile = ({ user }) => {
     }))
   }
 
-  const handleCancelBooking = async (bookingId) => {
-    if (!window.confirm("Cancel this booking?")) return
-
-    try {
-      const res = await fetch(
-        `http://localhost:5000/api/bookings/${bookingId}`,
-        { method: "DELETE" }
-      )
-
-      if (!res.ok) throw new Error("Cancel failed")
-
-      setBookings((prev) => prev.filter((b) => b.id !== bookingId))
-    } catch (err) {
-      alert("Failed to cancel booking")
-    }
+  const handleSave = () => {
+    setIsEditing(false)
   }
 
   return (
     <div className="user-profile-card">
       <div className="profile-avatar">
         <div className="avatar-placeholder">
-          {user.name?.split(" ").map((n) => n[0]).join("")}
+          {user.name
+            ?.split(" ")
+            .map((n) => n[0])
+            .join("")}
         </div>
       </div>
 
@@ -67,61 +39,44 @@ const UserProfile = ({ user }) => {
         {isEditing ? (
           <div className="profile-form">
             <div className="form-group">
-              <label>Name</label>
+              <label className="form-label">Name</label>
               <input
+                type="text"
+                className="form-control"
                 name="name"
                 value={formData.name || ""}
                 onChange={handleChange}
+                placeholder="Enter name"
               />
             </div>
 
             <div className="form-group">
-              <label>Email</label>
+              <label className="form-label">Email</label>
               <input
+                type="email"
+                className="form-control"
                 name="email"
                 value={formData.email || ""}
                 onChange={handleChange}
+                placeholder="Enter email"
               />
             </div>
-
-            <button onClick={() => setIsEditing(false)}>Save</button>
           </div>
         ) : (
           <div className="profile-info">
-            <p><strong>Name:</strong> {formData.name}</p>
-            <p><strong>Email:</strong> {formData.email}</p>
+            <div className="info-item">
+              <span className="info-label">Name</span>
+              <span className="info-value">{formData.name}</span>
+            </div>
+
+            <div className="info-item">
+              <span className="info-label">Email</span>
+              <span className="info-value">{formData.email}</span>
+            </div>
           </div>
         )}
 
-        {/* BOOKINGS SECTION */}
-        <div className="bookings-summary">
-          <h4>Your Bookings</h4>
-
-          {loading ? (
-            <p>Loading bookings...</p>
-          ) : bookings.length === 0 ? (
-            <p className="no-bookings">No active bookings</p>
-          ) : (
-            <ul className="booking-list">
-              {bookings.map((booking) => (
-                <li key={booking.id} className="booking-item">
-                  <div>
-                    <strong>{booking.event_title}</strong>
-                    <p>{booking.event_date}</p>
-                    <p>Tickets: {booking.ticket_count}</p>
-                  </div>
-
-                  <button
-                    className="cancel-btn"
-                    onClick={() => handleCancelBooking(booking.id)}
-                  >
-                    Cancel
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        
       </div>
     </div>
   )

@@ -10,6 +10,7 @@ const EventBooking = () => {
   const [showBookingModal, setShowBookingModal] = useState(false)
   const [user, setUser] = useState({ name: "", email: "" })
   const [events, setEvents] = useState([])
+  
 
   useEffect(() => {
   // 1️⃣ Try to get user from localStorage (after login)

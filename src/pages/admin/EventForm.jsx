@@ -189,6 +189,7 @@ export default function EventForm({ event, onSubmit, onCancel }) {
     <option value="event4.png">Event 4</option>
     <option value="event5.png">Event 5</option>
     <option value="event6.png">Event 6</option>
+    <option value="event7.png">Event 7</option>
     <option value="default.png">Default</option>
   </select>
 </div>
